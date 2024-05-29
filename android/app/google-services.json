@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1082763766718",
+    "project_id": "buga-c17d2",
+    "storage_bucket": "buga-c17d2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082763766718:android:2a6e2a9af5c043377227ef",
+        "android_client_info": {
+          "package_name": "com.buggagames.Buga"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1082763766718-u4lf6btfbemmng7qp9scdbib7bi26rmd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.buggagames.Buga",
+            "certificate_hash": "c099636bf19e46b979cbb4ec9ea568ea676d85d5"
+          }
+        },
+        {
+          "client_id": "1082763766718-vlssgvnnmga25hmfogt1vkm3m69q06j5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu38EnoubLdHfa3GHLbKRfXsGuTVTpCTI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1082763766718-vlssgvnnmga25hmfogt1vkm3m69q06j5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

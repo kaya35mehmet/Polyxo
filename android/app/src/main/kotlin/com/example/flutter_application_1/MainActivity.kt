@@ -1,0 +1,6 @@
+package com.buggagames.Buga
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}

@@ -1,0 +1,65 @@
+name: Buga
+description: A new Flutter project.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.1.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  http: ^0.13.4
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.16.0
+  cloud_firestore: ^4.14.0
+  cupertino_icons: ^1.0.2
+  another_flutter_splash_screen: ^1.2.0
+  google_sign_in: ^6.1.6
+  provider: ^6.1.1
+  firebase_core_platform_interface: 
+  web_socket_channel: ^2.4.0
+  shared_preferences: ^2.2.3
+  wakelock: ^0.6.2
+  flip_card: ^0.7.0
+  flutter_slimy_card: ^1.0.2
+  flutter_staggered_animations: ^1.1.1
+  url_launcher: ^6.2.4
+  just_audio: ^0.9.21
+  audio_service: ^0.18.0
+  in_app_purchase: ^3.1.13
+  # cloud_firestore_platform_interface: ^6.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/views/
+    - assets/images/icons/
+    - assets/sounds/sound.mp3
+
+  fonts:
+    - family: ProtestRiot
+      fonts:
+        - asset: assets/fonts/ProtestRiot-Regular.ttf
+    - family: Jost
+      fonts:
+        - asset: assets/fonts/jost/Jost-SemiBold.ttf
+          weight: 700
+        - asset: assets/fonts/jost/Jost-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/jost/Jost-Medium.ttf
+          weight: 200
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
