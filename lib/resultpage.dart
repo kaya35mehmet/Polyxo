@@ -247,19 +247,40 @@ class _ResultScreenState extends State<ResultScreen> {
                               height: 20,
                             ),
                             Center(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey[800]!,
-                                        blurRadius: 10.0,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                        width:
+                                            MediaQuery.of(context).size.width / 2 -
+                                                50,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: const Color.fromARGB(115, 250, 250, 250)),
+                                        ),
                                       ),
-                                    ]),
-                                child: Image.asset(
-                                  "assets/images/icons/vs.png",
-                                  width: 70,
-                                ),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.grey[800]!,
+                                            blurRadius: 10.0,
+                                          ),
+                                        ]),
+                                    child: Image.asset(
+                                      "assets/images/icons/vs.png",
+                                      width: 50,
+                                    ),
+                                  ),
+                                  Container(
+                                        width:
+                                            MediaQuery.of(context).size.width / 2 -
+                                                50,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: const Color.fromARGB(115, 250, 250, 250)),
+                                        ),
+                                      ),
+                                ],
                               ),
                             ),
                             const SizedBox(

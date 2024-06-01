@@ -5,8 +5,16 @@ class User {
   String? _photopath;
   int? _point;
   String? _displayname;
+  String? _rivalisbot;
 
-  User({int? id, String? guid, String? email, String? photopath, int? point, String? displayname}) {
+  User(
+      {int? id,
+      String? guid,
+      String? email,
+      String? photopath,
+      int? point,
+      String? displayname,
+      String? rivalisbot}) {
     if (id != null) {
       _id = id;
     }
@@ -25,6 +33,9 @@ class User {
     if (displayname != null) {
       _displayname = displayname;
     }
+    if (rivalisbot != null) {
+      _rivalisbot = rivalisbot;
+    }
   }
 
   int? get id => _id;
@@ -41,16 +52,19 @@ class User {
   set point(int? point) => _point = point;
   String? get displayname => _displayname;
   set displayname(String? displayname) => _displayname = displayname;
+  String? get rivalisbot => _rivalisbot;
+  set rivalisbot(String? displayname) => _rivalisbot = rivalisbot;
 
   User.getLeaders(Map<String, dynamic> json) {
     _email = json['email'];
     _photopath = json['photopath'];
     _point = json['point'];
-    _displayname = json['displayname'] ?? json['email'].toString().split("@").first;
+    _displayname =
+        json['displayname'] ?? json['email'].toString().split("@").first;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data =  <String, dynamic>{};
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['email'] = _email;
     data['photopath'] = _photopath;
     data['point'] = _point;

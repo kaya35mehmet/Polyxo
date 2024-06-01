@@ -58,10 +58,10 @@ class HomeScreenState extends State<HomeScreen>
     playAudio();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 1),
+      duration: const Duration(seconds: 3),
     );
 
-    _animation = Tween<double>(begin: 0, end: 1).animate(_animationController)
+    _animation = Tween<double>(begin: 0, end: 3).animate(_animationController)
       ..addListener(() {
         setState(() {});
       })
@@ -139,10 +139,10 @@ class HomeScreenState extends State<HomeScreen>
                 ],
               ),
               const SizedBox(
-                height: 100,
+                height: 80,
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                padding: const EdgeInsets.symmetric(horizontal: 80.0),
                 child: Center(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
@@ -282,35 +282,35 @@ class HomeScreenState extends State<HomeScreen>
                       ),
                     ),
                   ),
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ProfilePage(
-                            audioPlayer: _audioPlayer,
-                          ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(0),
+                        side: BorderSide(
+                            color: Colors.white.withOpacity(0.5), width: 1.0),
+                        shadowColor: Colors.black,
+                        backgroundColor: const Color.fromARGB(255, 25, 28, 25)
+                            .withOpacity(0.4),
+                        elevation: 6.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
                         ),
-                      );
-                    },
-                    iconSize: 50,
-                    icon: Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(50)),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(2.5, 2.5),
-                            blurRadius: 2.0,
-                            color: Color.fromARGB(255, 62, 62, 62),
-                          ),
-                        ],
+                        minimumSize: const Size(50, 50),
                       ),
-                      child: Image.asset(
-                        "assets/images/icons/settings.png",
-                        width: 50,
+                      onPressed: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfilePage(
+                              audioPlayer: _audioPlayer,
+                            ),
+                          ),
+                        );
+                      },
+                      child: const Icon(
+                        Icons.settings,
+                        size: 30,
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
@@ -325,8 +325,21 @@ class HomeScreenState extends State<HomeScreen>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconButton(
-                      onPressed: () {
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(0),
+                        side: BorderSide(
+                            color: Colors.white.withOpacity(0.5), width: 1.0),
+                        shadowColor: Colors.black,
+                        backgroundColor: const Color.fromARGB(255, 25, 28, 25)
+                            .withOpacity(0.4),
+                        elevation: 6.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        minimumSize: const Size(50, 50),
+                      ),
+                      onPressed: () async {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -336,43 +349,26 @@ class HomeScreenState extends State<HomeScreen>
                           ),
                         );
                       },
-                      iconSize: 50,
-                      icon: Container(
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(50)),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(2.5, 2.5),
-                              blurRadius: 2.0,
-                              color: Color.fromARGB(255, 62, 62, 62),
-                            ),
-                          ],
-                        ),
-                        child: Image.asset(
-                          "assets/images/icons/user.png",
-                          width: 50,
-                        ),
+                      child: const Icon(
+                        Icons.person,
+                        size: 30,
                       ),
                     ),
-                    IconButton(
-                      iconSize: 50,
-                      icon: Container(
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(50)),
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(2.5, 2.5),
-                              blurRadius: 2.0,
-                              color: Color.fromARGB(255, 62, 62, 62),
-                            ),
-                          ],
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(0),
+                        side: BorderSide(
+                            color: Colors.white.withOpacity(0.5), width: 1.0),
+                        shadowColor: Colors.black,
+                        backgroundColor: const Color.fromARGB(255, 25, 28, 25)
+                            .withOpacity(0.4),
+                        elevation: 6.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
                         ),
-                        child: Image.asset(
-                          "assets/images/icons/basket.png",
-                          width: 50,
-                        ),
+                        minimumSize: const Size(50, 50),
                       ),
-                      onPressed: () {
+                      onPressed: () async {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -380,7 +376,12 @@ class HomeScreenState extends State<HomeScreen>
                           ),
                         );
                       },
+                      child: const Icon(
+                        Icons.shopping_cart,
+                        size: 30,
+                      ),
                     ),
+                    
                     IconButton(
                       iconSize: 50,
                       icon: Container(

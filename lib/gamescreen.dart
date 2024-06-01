@@ -105,6 +105,7 @@ class _GameScreenState extends State<GameScreen>
       "guid": widget.guid,
       "username": widget.user.displayname,
       "rivalguid": widget.user.guid,
+      "rivalisbot": widget.user.rivalisbot,
     }));
   }
 
@@ -125,8 +126,7 @@ class _GameScreenState extends State<GameScreen>
     // WidgetsBinding.instance.addObserver(this);
     widget.broadcastStream.listen((message) {
       final data = jsonDecode(message);
-      if (data == "abandon") {
-        final data = jsonDecode(message);
+      
         if (data == "abandon") {
           widget.channel.sink.close();
           showDialog(
@@ -158,42 +158,8 @@ class _GameScreenState extends State<GameScreen>
             start = true;
           });
         }
-      }
+      
     });
-    //  widget.channel.stream.listen((message) {
-    //   print('Received: $message');
-    //   final data = jsonDecode(message);
-    //   if (data == "abandon") {
-    //     showDialog(
-    //         context: context,
-    //         barrierDismissible: false,
-    //         builder: (BuildContext context) {
-    //           return AlertDialog(
-    //             title: const Text('KAZANDINIZ'),
-    //             content: const Text('Rakibiniz oyunu terk etti.'),
-    //             actions: <Widget>[
-    //               TextButton(
-    //                 onPressed: () {
-    //                   Navigator.pushAndRemoveUntil<void>(
-    //                     context,
-    //                     MaterialPageRoute<void>(
-    //                         builder: (BuildContext context) =>
-    //                             const HomeScreen()),
-    //                     ModalRoute.withName('/'),
-    //                   );
-    //                 },
-    //                 child: const Text('Kapat'),
-    //               ),
-    //             ],
-    //           );
-    //         });
-    //   } else {
-    //     setState(() {
-    //       _secondsRemaining = data;
-    //       start = true;
-    //     });
-    //   }
-    // });
   }
 
   startgame() async {

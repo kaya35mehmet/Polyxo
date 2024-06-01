@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:Buga/models/dictionary.dart';
 import 'package:Buga/models/user.dart';
 import 'package:Buga/gamescreen.dart';
-import 'package:Buga/widgets/logo.dart';
 import 'package:Buga/widgets/raipple.dart';
 import 'package:firebase_auth/firebase_auth.dart' as f;
 import 'package:flutter/foundation.dart';
@@ -23,7 +22,8 @@ class MatchScreen extends StatefulWidget {
       required this.guid,
       required this.point,
       required this.animationController,
-      required this.animation, required this.amount});
+      required this.animation,
+      required this.amount});
 
   @override
   State<MatchScreen> createState() => _MatchScreenState();
@@ -51,17 +51,14 @@ class _MatchScreenState extends State<MatchScreen>
     _streamController = StreamController<User>();
     getData();
     super.initState();
-    // WebSocket bağlantısını açın
     channel = WebSocketChannel.connect(
       Uri.parse(url),
     );
     broadcastStream = channel.stream.asBroadcastStream();
     broadcastStream.listen((message) {
-      // Gelen mesajı işleyin
       if (kDebugMode) {
         print('Received: $message');
       }
-      // Eşleşme olduğunda GameScreen'e geçin
       if (message == 'match_found') {}
     });
     _animationController = AnimationController(
@@ -103,7 +100,8 @@ class _MatchScreenState extends State<MatchScreen>
                 animation: widget.animation,
                 animationController: widget.animationController,
                 channel: channel,
-                broadcastStream: broadcastStream, amount: widget.amount,
+                broadcastStream: broadcastStream,
+                amount: widget.amount,
               ),
             ),
           );
@@ -137,8 +135,10 @@ class _MatchScreenState extends State<MatchScreen>
             id: 0,
             photopath: data["player"]["photopath"].toString(),
             point: data["player"]["point"],
+            rivalisbot: data["player"]["rivalisbot"],
             displayname: data["player"]["displayname"] ??
                 data["player"]["email"].toString());
+          
         Iterable res = data["words"];
         list = res.map((e) => Dictionary.fromMap(e)).toList();
 
@@ -198,7 +198,6 @@ class _MatchScreenState extends State<MatchScreen>
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Logo(),
                               const SizedBox(
                                 height: 100,
                               ),
@@ -248,16 +247,64 @@ class _MatchScreenState extends State<MatchScreen>
                         ),
                       );
                     } else {
-                      return Stack(children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height,
+                        child: Stack(
                           children: [
-                            Stack(
-                              children: [
-                                Center(
-                                  child: CustomPaint(
-                                    painter: RipplePainter(_animation.value),
-                                    child: Center(
+                            SizedBox(
+                              height: MediaQuery.of(context).size.height * 0.7,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                   Center(
+                                      child: CircleAvatar(
+                                        radius: 50,
+                                        backgroundImage: NetworkImage(f.FirebaseAuth
+                                            .instance.currentUser!.photoURL!),
+                                      ),
+                                    ),
+                                  
+                                  const SizedBox(
+                                    height: 40,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width / 2 -
+                                                50,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: const Color.fromARGB(115, 250, 250, 250)),
+                                        ),
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.grey[800]!,
+                                                blurRadius: 10.0,
+                                              ),
+                                            ]),
+                                        child: Image.asset(
+                                          "assets/images/icons/vs.png",
+                                          width: 50,
+                                        ),
+                                      ),
+                                      Container(
+                                        width:
+                                            MediaQuery.of(context).size.width / 2 -
+                                                50,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(color: const Color.fromARGB(115, 250, 250, 250)),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 40,
+                                  ),
+                                   Center(
                                       child: CircleAvatar(
                                         radius: 50,
                                         backgroundImage: NetworkImage(
@@ -265,56 +312,65 @@ class _MatchScreenState extends State<MatchScreen>
                                         ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 50,
-                            ),
-                            const Text(
-                              "Yarışma Başlıyor",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                shadows: <Shadow>[
-                                  Shadow(
-                                    offset: Offset(4.0, 4.0),
-                                    blurRadius: 5.0,
-                                    color: Color.fromARGB(255, 0, 0, 0),
-                                  ),
+                                  
                                 ],
                               ),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  width: 70,
-                                  height: 70,
-                                  margin: const EdgeInsets.all(40),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: const Color.fromARGB(255, 11, 10, 10)
-                                        .withOpacity(0.8),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "$_secondsRemaining",
-                                      style: const TextStyle(
-                                          color: Color.fromARGB(
-                                              255, 235, 233, 233),
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.bold),
+                            Positioned(
+                              bottom: 10,
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width - 40,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      "Yarışma Başlıyor",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                        shadows: <Shadow>[
+                                          Shadow(
+                                            offset: Offset(4.0, 4.0),
+                                            blurRadius: 5.0,
+                                            color: Color.fromARGB(255, 0, 0, 0),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 70,
+                                          height: 70,
+                                          margin: const EdgeInsets.all(40),
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: const Color.fromARGB(
+                                                    255, 11, 10, 10)
+                                                .withOpacity(0.8),
+                                          ),
+                                          child: Center(
+                                            child: Text(
+                                              "$_secondsRemaining",
+                                              style: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 235, 233, 233),
+                                                  fontSize: 30,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                              ],
+                              ),
                             ),
                           ],
                         ),
-                      ]);
+                      );
                     }
                   }),
             ),
