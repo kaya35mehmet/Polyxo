@@ -17,7 +17,7 @@ class Logo extends StatelessWidget {
                     color: Colors.white,
                     shadows: <Shadow>[
                       Shadow(
-                        offset: Offset(4.0, 2.0),
+                        offset: Offset(6.0, 4.0),
                         blurRadius: 3.0,
                         color: Color.fromARGB(255, 0, 0, 0),
                       ),

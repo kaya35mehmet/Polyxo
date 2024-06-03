@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flutter/foundation.dart';
+import 'package:Buga/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -27,8 +27,7 @@ Future<String> saveuser(
   }
 }
 
-Future<String> getuser() async {
- 
+Future<User> getuser() async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   final String? guid = prefs.getString('guid');
   String apiUrl = 'http://213.142.151.21:3000/api/getuser';
@@ -45,29 +44,8 @@ Future<String> getuser() async {
 
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
-
-    return data[0]["point"].toString();
+    return User.getUser(data[0]);
   } else {
     throw Exception('Failed');
-  }
-}
-
-deneme() async {
-  var headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-  var request =
-      http.Request('POST', Uri.parse('http://213.142.151.21:3000/api/message'));
-  request.bodyFields = {'guid': '4dc9027b-bb71-4d72-800c-a8e83942303e'};
-  request.headers.addAll(headers);
-
-  http.StreamedResponse response = await request.send();
-
-  if (response.statusCode == 200) {
-    if (kDebugMode) {
-      print(await response.stream.bytesToString());
-    }
-  } else {
-    if (kDebugMode) {
-      print(response.reasonPhrase);
-    }
   }
 }

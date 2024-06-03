@@ -59,7 +59,7 @@ class _AnimCardState extends State<AnimCard> {
               ],
               color: Colors.grey.shade200.withOpacity(1.0),
               borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(30)),
+                  const BorderRadius.vertical(top: Radius.circular(10)),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -145,7 +145,7 @@ class CardItem extends StatelessWidget {
           ],
           color: const Color.fromARGB(255, 210, 209, 215).withOpacity(1.0),
           borderRadius: const BorderRadius.vertical(
-            bottom: Radius.circular(30),
+            bottom: Radius.circular(10),
           ),
         ),
         child: Padding(

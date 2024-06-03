@@ -1,9 +1,12 @@
 import 'package:Buga/functions/login.dart';
+import 'package:Buga/functions/users.dart';
 import 'package:Buga/leaderboard.dart';
 import 'package:Buga/profilepage.dart';
 import 'package:Buga/shopscreen.dart';
 import 'package:Buga/styles/style.dart';
 import 'package:Buga/widgets/button.dart';
+import 'package:Buga/widgets/fortunewheel.dart';
+import 'package:Buga/widgets/gift.dart';
 import 'package:Buga/widgets/logo.dart';
 import 'package:Buga/widgets/raipple.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +14,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,6 +30,8 @@ class HomeScreenState extends State<HomeScreen>
   String? guid;
   String? point;
   late AudioPlayer _audioPlayer;
+  DateTime? gift;
+  DateTime? fortunewheel;
 
   Future<void> _playAudio() async {
     try {
@@ -77,9 +81,11 @@ class HomeScreenState extends State<HomeScreen>
   }
 
   getpoint() async {
-    var dd = await getuser();
+    var data = await getuser();
     setState(() {
-      point = dd;
+      point = data.point!.toString();
+      gift = data.gift;
+      fortunewheel = data.fortunewheel;
     });
   }
 
@@ -95,6 +101,51 @@ class HomeScreenState extends State<HomeScreen>
   void dispose() {
     _animationController.dispose();
     super.dispose();
+  }
+
+  Future<void> showFortuneWheel() async {
+    showGeneralDialog(
+      context: context,
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return  FortuneWheel(date: fortunewheel!,);
+      },
+    ).then((value) async {
+      int val = value as int;
+      int point2 = int.parse(point!);
+      for (var i = 0; i <= val; i++) {
+        await Future<dynamic>.delayed(const Duration(milliseconds: 5), () {
+          setState(() {
+            point = (point2++).toString();
+          });
+        });
+      }
+      print(point);
+      updatefortunewheel(guid, point).then((value) => getpoint());
+      // getpoint();
+    });
+  }
+
+
+  Future<void> showGift() async {
+    showGeneralDialog(
+      context: context,
+      pageBuilder: (BuildContext context, Animation<double> animation,
+          Animation<double> secondaryAnimation) {
+        return   GiftScreen(date: gift!,);
+      },
+    ).then((value) async {
+     int val = value as int;
+      int point2 = int.parse(point!);
+      for (var i = 0; i <= val; i++) {
+        await Future<dynamic>.delayed(const Duration(milliseconds: 5), () {
+          setState(() {
+            point = (point2++).toString();
+          });
+        });
+      }
+      updategift(guid, point).then((value) => getpoint());
+    });
   }
 
   @override
@@ -161,9 +212,9 @@ class HomeScreenState extends State<HomeScreen>
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: Text(
-                                "Düello Miktarını Seçin",
+                                "RİSK",
                                 textAlign: TextAlign.center,
-                                style: resultstyle,
+                                style: title24,
                               ),
                               content: Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -283,34 +334,34 @@ class HomeScreenState extends State<HomeScreen>
                     ),
                   ),
                   ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.all(0),
-                        side: BorderSide(
-                            color: Colors.white.withOpacity(0.5), width: 1.0),
-                        shadowColor: Colors.black,
-                        backgroundColor: const Color.fromARGB(255, 25, 28, 25)
-                            .withOpacity(0.4),
-                        elevation: 6.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        minimumSize: const Size(50, 50),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.all(0),
+                      side: BorderSide(
+                          color: Colors.white.withOpacity(0.5), width: 1.0),
+                      shadowColor: Colors.black,
+                      backgroundColor: const Color.fromARGB(255, 25, 28, 25)
+                          .withOpacity(0.4),
+                      elevation: 6.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
                       ),
-                      onPressed: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProfilePage(
-                              audioPlayer: _audioPlayer,
-                            ),
-                          ),
-                        );
-                      },
-                      child: const Icon(
-                        Icons.settings,
-                        size: 30,
-                      ),
+                      minimumSize: const Size(50, 50),
                     ),
+                    onPressed: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ProfilePage(
+                            audioPlayer: _audioPlayer,
+                          ),
+                        ),
+                      );
+                    },
+                    child: const Icon(
+                      Icons.settings,
+                      size: 30,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -326,34 +377,26 @@ class HomeScreenState extends State<HomeScreen>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.all(0),
-                        side: BorderSide(
-                            color: Colors.white.withOpacity(0.5), width: 1.0),
-                        shadowColor: Colors.black,
-                        backgroundColor: const Color.fromARGB(255, 25, 28, 25)
-                            .withOpacity(0.4),
-                        elevation: 6.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
-                        minimumSize: const Size(50, 50),
-                      ),
-                      onPressed: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProfilePage(
-                              audioPlayer: _audioPlayer,
-                            ),
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(0),
+                          side: BorderSide(
+                              color: Colors.white.withOpacity(0.5), width: 1.0),
+                          shadowColor: Colors.black,
+                          backgroundColor: const Color.fromARGB(255, 25, 28, 25)
+                              .withOpacity(0.4),
+                          elevation: 6.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
                           ),
-                        );
-                      },
-                      child: const Icon(
-                        Icons.person,
-                        size: 30,
-                      ),
-                    ),
+                          minimumSize: const Size(50, 50),
+                        ),
+                        onPressed: () async {
+                         showGift();
+                        },
+                        child: Image.asset(
+                          "assets/images/icons/gift.png",
+                          width: 30,
+                        )),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         padding: const EdgeInsets.all(0),
@@ -381,8 +424,39 @@ class HomeScreenState extends State<HomeScreen>
                         size: 30,
                       ),
                     ),
-                    
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(0),
+                        side: BorderSide(
+                            color: Colors.white.withOpacity(0.5), width: 1.0),
+                        shadowColor: Colors.black,
+                        backgroundColor: const Color.fromARGB(255, 25, 28, 25)
+                            .withOpacity(0.4),
+                        elevation: 6.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        minimumSize: const Size(50, 50),
+                      ),
+                      onPressed: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const LeaderBoard(),
+                          ),
+                        );
+                      },
+                      child: const Icon(
+                        Icons.leaderboard,
+                        size: 30,
+                      ),
+                    ),
                     IconButton(
+                      onPressed: () {
+                        showFortuneWheel().then((value){
+                          // updatefortunewheel(guid, point).then((value) => getpoint());
+                        });
+                      },
                       iconSize: 50,
                       icon: Container(
                         decoration: const BoxDecoration(
@@ -396,42 +470,9 @@ class HomeScreenState extends State<HomeScreen>
                           ],
                         ),
                         child: Image.asset(
-                          "assets/images/icons/leaderboard.png",
+                          "assets/images/icons/fortunewheel.png",
                           width: 50,
                         ),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const LeaderBoard(),
-                          ),
-                        );
-                      },
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shadowColor: Colors.black,
-                        backgroundColor:
-                            const Color.fromARGB(255, 255, 255, 255),
-                        elevation: 10.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        minimumSize: const Size(100, 40),
-                      ),
-                      onPressed: () async {
-                        !await launchUrl(Uri.parse(
-                            'market://details?id=6444313380863392380'));
-                      },
-                      child: const Text(
-                        "DAHA FAZLA",
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                            fontFamily: "Jost"),
                       ),
                     ),
                   ],

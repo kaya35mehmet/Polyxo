@@ -6,15 +6,20 @@ class User {
   int? _point;
   String? _displayname;
   String? _rivalisbot;
+  DateTime? _fortunewheel;
+  DateTime? _gift;
 
-  User(
-      {int? id,
-      String? guid,
-      String? email,
-      String? photopath,
-      int? point,
-      String? displayname,
-      String? rivalisbot}) {
+  User({
+    int? id,
+    String? guid,
+    String? email,
+    String? photopath,
+    int? point,
+    String? displayname,
+    String? rivalisbot,
+    DateTime? fortunewheel,
+    DateTime? gift,
+  }) {
     if (id != null) {
       _id = id;
     }
@@ -36,6 +41,12 @@ class User {
     if (rivalisbot != null) {
       _rivalisbot = rivalisbot;
     }
+    if (fortunewheel != null) {
+      _fortunewheel = fortunewheel;
+    }
+    if (gift != null) {
+      _gift = gift;
+    }
   }
 
   int? get id => _id;
@@ -53,7 +64,20 @@ class User {
   String? get displayname => _displayname;
   set displayname(String? displayname) => _displayname = displayname;
   String? get rivalisbot => _rivalisbot;
-  set rivalisbot(String? displayname) => _rivalisbot = rivalisbot;
+  set rivalisbot(String? rivalisbot) => _rivalisbot = rivalisbot;
+  DateTime? get fortunewheel => _fortunewheel;
+  set fortunewheel(DateTime? fortunewheel) => _fortunewheel = fortunewheel;
+  DateTime? get gift => _gift;
+  set gift(DateTime? gift) => _gift = gift;
+
+   User.getUser(Map<String, dynamic> json) {
+    _email = json['email'];
+    _photopath = json['photopath'];
+    _point = json['point'];
+    _gift = DateTime.tryParse(json['gift']);
+    _fortunewheel = DateTime.tryParse(json['fortunewheel']);
+    _displayname = json['displayname'] ?? json['email'].toString().split("@").first;
+  }
 
   User.getLeaders(Map<String, dynamic> json) {
     _email = json['email'];

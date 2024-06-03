@@ -251,13 +251,15 @@ class _ResultScreenState extends State<ResultScreen> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Container(
-                                        width:
-                                            MediaQuery.of(context).size.width / 2 -
-                                                50,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: const Color.fromARGB(115, 250, 250, 250)),
-                                        ),
-                                      ),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2 -
+                                            50,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: const Color.fromARGB(
+                                              115, 250, 250, 250)),
+                                    ),
+                                  ),
                                   Container(
                                     decoration: BoxDecoration(
                                         shape: BoxShape.circle,
@@ -273,13 +275,15 @@ class _ResultScreenState extends State<ResultScreen> {
                                     ),
                                   ),
                                   Container(
-                                        width:
-                                            MediaQuery.of(context).size.width / 2 -
-                                                50,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(color: const Color.fromARGB(115, 250, 250, 250)),
-                                        ),
-                                      ),
+                                    width:
+                                        MediaQuery.of(context).size.width / 2 -
+                                            50,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: const Color.fromARGB(
+                                              115, 250, 250, 250)),
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:Buga/homescreen.dart';
 import 'package:Buga/models/user.dart';
 import 'package:Buga/resultpage.dart';
+import 'package:Buga/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:Buga/widgets/gamewidgets/gesture.dart';
 import 'package:Buga/models/answer.dart';
@@ -53,12 +54,19 @@ class _GameScreenState extends State<GameScreen>
   late Timer _timer;
   late Future<bool> ftstart;
   bool start = false;
+  double _progress = 1.0;
 
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       setState(() {
         if (_secondsRemaining > 0) {
           _secondsRemaining--;
+          if (_progress > 0) {
+            _progress -= 1 / 60;
+            if (_progress < 0) {
+              _progress = 0;
+            }
+          }
         } else {
           _stopTimer();
           Navigator.pushReplacement(
@@ -126,39 +134,38 @@ class _GameScreenState extends State<GameScreen>
     // WidgetsBinding.instance.addObserver(this);
     widget.broadcastStream.listen((message) {
       final data = jsonDecode(message);
-      
-        if (data == "abandon") {
-          widget.channel.sink.close();
-          showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('KAZANDINIZ'),
-                  content: const Text('Rakibiniz oyunu terk etti.'),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushAndRemoveUntil<void>(
-                          context,
-                          MaterialPageRoute<void>(
-                              builder: (BuildContext context) =>
-                                  const HomeScreen()),
-                          ModalRoute.withName('/'),
-                        );
-                      },
-                      child: const Text('Kapat'),
-                    ),
-                  ],
-                );
-              });
-        } else {
-          setState(() {
-            _secondsRemaining = data;
-            start = true;
-          });
-        }
-      
+
+      if (data == "abandon") {
+        widget.channel.sink.close();
+        showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: const Text('KAZANDINIZ'),
+                content: const Text('Rakibiniz oyunu terk etti.'),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushAndRemoveUntil<void>(
+                        context,
+                        MaterialPageRoute<void>(
+                            builder: (BuildContext context) =>
+                                const HomeScreen()),
+                        ModalRoute.withName('/'),
+                      );
+                    },
+                    child: const Text('Kapat'),
+                  ),
+                ],
+              );
+            });
+      } else {
+        setState(() {
+          _secondsRemaining = data;
+          start = true;
+        });
+      }
     });
   }
 
@@ -276,7 +283,7 @@ class _GameScreenState extends State<GameScreen>
                 return Stack(
                   children: [
                     Image.asset(
-                      "assets/images/views/7.jpg",
+                      "assets/images/views/9.jpg",
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
                       fit: BoxFit.cover,
@@ -293,7 +300,6 @@ class _GameScreenState extends State<GameScreen>
                               SizedBox(
                                 height: 10,
                               ),
-                              // Text("Sorular alınıyor")
                             ],
                           ),
                         ),
@@ -305,7 +311,7 @@ class _GameScreenState extends State<GameScreen>
                 return Stack(
                   children: [
                     Image.asset(
-                      "assets/images/views/7.jpg",
+                      "assets/images/views/12.jpg",
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
                       fit: BoxFit.cover,
@@ -332,16 +338,6 @@ class _GameScreenState extends State<GameScreen>
                             ),
                           ),
                         ),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: LinearProgressIndicator(
-                        //     minHeight: 20,
-                        //     value: _secondsRemaining.toDouble() / 45,
-                        //     backgroundColor: const Color.fromARGB(255, 8, 1, 1),
-                        //     valueColor: const AlwaysStoppedAnimation<Color>(
-                        //         Color.fromARGB(255, 186, 34, 75)),
-                        //   ),
-                        // ),
                       ],
                     ),
                     Column(
@@ -353,73 +349,69 @@ class _GameScreenState extends State<GameScreen>
                               padding: const EdgeInsets.all(10.0),
                               child: Stack(
                                 children: [
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 40),
-                                    width: screenWidth,
-                                    height: 85,
-                                    decoration: const BoxDecoration(
-                                      color: Color.fromARGB(255, 15, 177, 9),
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(10),
-                                      ),
-                                    ),
-                                  ),
-                                  Column(
-                                    children: [
-                                      Container(
-                                        alignment: Alignment.center,
-                                        margin: const EdgeInsets.only(top: 0),
-                                        width: screenWidth * 0.5,
-                                        height: 20,
-                                        decoration: const BoxDecoration(
-                                          color:
-                                              Color.fromARGB(255, 15, 177, 9),
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(10),
-                                            topRight: Radius.circular(10),
-                                          ),
+                                  Center(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      width: screenWidth * 0.92,
+                                      height: 150,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: const BorderRadius.all(
+                                          Radius.circular(10),
                                         ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            const Text(
-                                              "SORULAR   ",
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                color: Color.fromARGB(
-                                                    255, 255, 255, 255),
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color:
+                                                Colors.black.withOpacity(0.5),
+                                            spreadRadius: 5,
+                                            blurRadius: 7,
+                                            offset: const Offset(0, 3),
+                                          ),
+                                        ],
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          Container(
+                                            alignment: Alignment.topCenter,
+                                            margin:
+                                                const EdgeInsets.only(top: 0),
+                                            width: screenWidth * 0.5,
+                                            height: 24,
+                                            decoration:  BoxDecoration(
+                                              color: mainColor,
+                                              borderRadius: const BorderRadius.only(
+                                                bottomRight:
+                                                    Radius.circular(10),
                                               ),
                                             ),
-                                            Text(
-                                              "${lindex + 1}/10",
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  "SORULAR   ",
+                                                  style: answer14,
+                                                ),
+                                                Text(
+                                                  "${lindex + 1}/10",
+                                                  style: answer14,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Center(
+                                            child: Text(
+                                              question.toUpperCase(),
                                               style: const TextStyle(
-                                                  color: Colors.white),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Center(
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          width: screenWidth * 0.92,
-                                          height: 100,
-                                          decoration: const BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(10),
+                                                  color: Colors.black,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 26,
+                                                  fontFamily: 'Jost'),
                                             ),
                                           ),
-                                          child: Text(
-                                            question,
-                                            style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
+                                        ],
                                       ),
-                                    ],
+                                    ),
                                   ),
                                 ],
                               ),
@@ -804,14 +796,31 @@ class _GameScreenState extends State<GameScreen>
                       bottom: screenWidth * 0.65,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: IconButton(
-                          onPressed: () {
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.all(0),
+                            side: BorderSide(
+                                color: Colors.white.withOpacity(0.5),
+                                width: 1.0),
+                            shadowColor: Colors.black,
+                            backgroundColor:
+                                const Color.fromARGB(255, 25, 28, 25)
+                                    .withOpacity(0.4),
+                            elevation: 6.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            minimumSize: const Size(60, 60),
+                          ),
+                          onPressed: () async {
                             setState(() {
                               shuffleletters.shuffle();
                             });
                           },
-                          iconSize: 60,
-                          icon: Image.asset("assets/images/icons/shuffle.png"),
+                          child: const Icon(
+                            Icons.shuffle,
+                            size: 40,
+                          ),
                         ),
                       ),
                     ),
@@ -820,18 +829,37 @@ class _GameScreenState extends State<GameScreen>
                       right: 0,
                       child: Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: IconButton(
-                          onPressed: () {
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: const EdgeInsets.all(0),
+                            side: BorderSide(
+                                color: Colors.white.withOpacity(0.5),
+                                width: 1.0),
+                            shadowColor: Colors.black,
+                            backgroundColor:
+                                const Color.fromARGB(255, 25, 28, 25)
+                                    .withOpacity(0.4),
+                            elevation: 6.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50),
+                            ),
+                            minimumSize: const Size(60, 60),
+                          ),
+                          onPressed: () async {
                             setState(() {
-                              lindex++;
+                              if (lindex < 10) {
+                                lindex++;
+                              }
                               siradaki();
                               answers[lindex - 1].answer = false;
                               answers[lindex - 1].question =
                                   list[lindex - 1].word;
                             });
                           },
-                          iconSize: 60,
-                          icon: Image.asset("assets/images/icons/next.png"),
+                          child: const Icon(
+                            Icons.next_plan_outlined,
+                            size: 60,
+                          ),
                         ),
                       ),
                     ),
@@ -909,21 +937,16 @@ class _GameScreenState extends State<GameScreen>
                         ),
                       ),
                     ),
-                    // Positioned(
-                    //   bottom: 10,
-                    //   child: SizedBox(
-                    //     width: MediaQuery.of(context).size.width,
-                    //     height: 40,
-                    //     child: ListView.builder(
-                    //       scrollDirection: Axis.horizontal,
-                    //       itemCount: 10,
-                    //       itemBuilder: (context, index) {
-                    //         return CircleNumber(
-                    //             index + 1, answers[index].answer!);
-                    //       },
-                    //     ),
-                    //   ),
-                    // ),
+                    Positioned(
+                      width: screenWidth,
+                      height: 10,
+                      bottom: 0,
+                      child: LinearProgressIndicator(
+                        color: mainColor,
+                        backgroundColor: Colors.grey[200],
+                        value: _progress,
+                      ),
+                    ),
                   ],
                 );
               }
