@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:Buga/models/dictionary.dart';
-import 'package:Buga/models/user.dart';
-import 'package:Buga/gamescreen.dart';
-import 'package:Buga/widgets/raipple.dart';
+import 'package:buga/models/dictionary.dart';
+import 'package:buga/models/user.dart';
+import 'package:buga/gamescreen.dart';
+import 'package:buga/widgets/raipple.dart';
 import 'package:firebase_auth/firebase_auth.dart' as f;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

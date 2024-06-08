@@ -1,4 +1,6 @@
-import 'package:Buga/models/firebase_auth.dart';
+import 'package:buga/models/firebase_auth.dart';
+import 'package:buga/styles/style.dart';
+import 'package:buga/widgets/logo.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,61 +16,115 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: ListView(
-        children: <Widget>[
-          Stack(
-            children: <Widget>[
-              ClipPath(
-                clipper: WaveClipper1(),
-                child: Container(
-                  width: double.infinity,
-                  height: 300,
-                  decoration: const BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                    Color.fromARGB(255, 76, 231, 52),
-                    Color(0xFF1fb109)
-                  ])),
-                  child: const Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 40,
-                      ),
-                      Text(
-                        "BUGA",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 30),
-                      ),
-                    ],
+      backgroundColor: const Color(0xFF5286e1),
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.black87,
+              Color(0xFF5286e1),
+              Color(0xFF5286e1)
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: ListView(
+          children: <Widget>[
+            const SizedBox(
+              height: 100,
+            ),
+            const Logo(),
+            const SizedBox(
+              height: 100,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  side: BorderSide(
+                      color: Colors.white.withOpacity(0.5), width: 1.0),
+                  shadowColor: Colors.black,
+                  backgroundColor:
+                      const Color.fromARGB(255, 25, 28, 25).withOpacity(0.4),
+                  elevation: 6.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
                   ),
+                  minimumSize: const Size(250, 60),
+                ),
+                onPressed: () {
+                  final provider =
+                      Provider.of<GoogleSignInProvider>(context, listen: false);
+                  provider.login();
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(
+                      "assets/images/icons/google.png",
+                      width: 50,
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Text(
+                      "Google ile giriş yap",
+                      style: profilechoises,
+                    ),
+                    const Center(),
+                    const Center(),
+                    const Center(),
+                  ],
                 ),
               ),
-            ],
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: Container(
-                decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(100)),
-                    color: Colors.white),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    final provider = Provider.of<GoogleSignInProvider>(context,
-                        listen: false);
-                    provider.login();
-                  },
-                  child: const Text('Sign in with Google'),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  side: BorderSide(
+                      color: Colors.white.withOpacity(0.5), width: 1.0),
+                  shadowColor: Colors.black,
+                  backgroundColor:
+                      const Color.fromARGB(255, 25, 28, 25).withOpacity(0.4),
+                  elevation: 6.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  minimumSize: const Size(250, 60),
                 ),
-              )),
-          const SizedBox(
-            height: 20,
-          ),
-        ],
+                onPressed: () {
+               
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Image.asset(
+                      "assets/images/icons/facebook.png",
+                      width: 50,
+                    ),
+                    const SizedBox(
+                      width: 4,
+                    ),
+                    Text(
+                      "Facebook ile giriş yap",
+                      style: profilechoises,
+                    ),
+                    const Center(),
+                    const Center(),
+                    const Center(),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

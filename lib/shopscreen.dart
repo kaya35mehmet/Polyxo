@@ -1,3 +1,4 @@
+import 'package:buga/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
@@ -12,7 +13,64 @@ class ShopScreen extends StatefulWidget {
 class _ShopScreenState extends State<ShopScreen> {
   static const IconData currencylirarounded =
       IconData(0xf02f7, fontFamily: 'MaterialIcons');
-  final InAppPurchase inAppPurchase = InAppPurchase.instance;
+
+  final InAppPurchase _inAppPurchase = InAppPurchase.instance;
+  bool _available = true;
+  List<ProductDetails> _products = [];
+  List<PurchaseDetails> _purchases = [];
+
+  @override
+  void initState() {
+    final Stream<List<PurchaseDetails>> purchaseUpdated =
+        _inAppPurchase.purchaseStream;
+    purchaseUpdated.listen((purchases) {
+      _handlePurchaseUpdates(purchases);
+    });
+    _initialize();
+    super.initState();
+  }
+
+  Future<void> _initialize() async {
+    final bool isAvailable = await _inAppPurchase.isAvailable();
+    if (!isAvailable) {
+      setState(() {
+        _available = false;
+      });
+      return;
+    }
+
+    const Set<String> kIds = <String>{'product_id_1', 'product_id_2'};
+    final ProductDetailsResponse response =
+        await _inAppPurchase.queryProductDetails(kIds);
+    if (response.error != null) {
+      // Handle the error.
+      setState(() {
+        _available = false;
+      });
+      return;
+    }
+
+    if (response.productDetails.isEmpty) {
+      // Handle the no products found error.
+      setState(() {
+        _available = false;
+      });
+      return;
+    }
+
+    setState(() {
+      _products = response.productDetails;
+    });
+  }
+
+  void _handlePurchaseUpdates(List<PurchaseDetails> purchases) {
+    // Handle purchase updates here.
+    setState(() {
+      _purchases = purchases;
+    });
+  }
+
+
   @override
   Widget build(BuildContext context) {
     // final screenWidth = MediaQuery.of(context).size.width;
@@ -32,7 +90,7 @@ class _ShopScreenState extends State<ShopScreen> {
         ),
         Container(
             margin: const EdgeInsets.only(top: 320),
-            child: const GridViewWidget()),
+            child:  GridViewWidget(available: _available, products: _products, purchases: _purchases,)),
         Container(
           margin: const EdgeInsets.only(top: 100, left: 10, right: 10),
           height: 200,
@@ -216,8 +274,8 @@ class _ShopScreenState extends State<ShopScreen> {
                       ],
                     ),
                   ),
-                  Center(),
-                  Center()
+                  const Center(),
+                  const Center()
                 ],
               ),
             ),
@@ -229,24 +287,26 @@ class _ShopScreenState extends State<ShopScreen> {
 }
 
 class GridViewWidget extends StatelessWidget {
-  const GridViewWidget({super.key});
-  static const IconData currency_lira_rounded =
+  final bool available;
+  final List<ProductDetails> products;
+  final List<PurchaseDetails> purchases;
+  const GridViewWidget({super.key, required this.available, required this.products, required this.purchases});
+  static const IconData currencylirarounded =
       IconData(0xf02f7, fontFamily: 'MaterialIcons');
   @override
   Widget build(BuildContext context) {
     double w = MediaQuery.of(context).size.width;
     int columnCount = 3;
-
+    int index = -1;
     return AnimationLimiter(
-      child: GridView.count(
+      child: available ? GridView.count(
         physics: const BouncingScrollPhysics(
             parent: AlwaysScrollableScrollPhysics()),
         padding: EdgeInsets.all(w / 70),
-        crossAxisCount: columnCount,
-        children: List.generate(
-          21,
-          (int index) {
-            return AnimationConfiguration.staggeredGrid(
+        crossAxisCount: products.length,
+        children: products.map((product) {
+          ++index;
+          return AnimationConfiguration.staggeredGrid(
               position: index,
               duration: const Duration(milliseconds: 500),
               columnCount: columnCount,
@@ -278,7 +338,7 @@ class GridViewWidget extends StatelessWidget {
                           "assets/images/icons/coins.png",
                           width: 40,
                         ),
-                        Text("${(index + 1) * 1000} adet",
+                        Text("${product.title} adet",
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
@@ -310,7 +370,7 @@ class GridViewWidget extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
-                                    "${(index + 1) * 10}",
+                                    product.price,
                                     style: const TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -325,7 +385,7 @@ class GridViewWidget extends StatelessWidget {
                                     ),
                                   ),
                                   const Icon(
-                                    currency_lira_rounded,
+                                    currencylirarounded,
                                     size: 16,
                                     shadows: <Shadow>[
                                       Shadow(
@@ -346,9 +406,10 @@ class GridViewWidget extends StatelessWidget {
                 ),
               ),
             );
-          },
-        ),
-      ),
+        }).toList(),
+      ) :  Center(
+              child: Text('Store is unavailable'.toUpperCase(), style: profiletitle,),
+            ),
     );
   }
 }

@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:Buga/models/user.dart';
+import 'package:buga/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -44,7 +44,7 @@ Future<User> getuser() async {
 
   if (response.statusCode == 200) {
     var data = json.decode(response.body);
-    return User.getUser(data[0]);
+    return User.fromJson(data[0]);
   } else {
     throw Exception('Failed');
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:Buga/widgets/gamewidgets/path.dart';
-import 'package:Buga/widgets/gamewidgets/point.dart';
-import 'package:Buga/widgets/gamewidgets/panel.dart';
+import 'package:buga/widgets/gamewidgets/path.dart';
+import 'package:buga/widgets/gamewidgets/point.dart';
+import 'package:buga/widgets/gamewidgets/panel.dart';
 
 typedef OnGestureCompleteListener = void Function(int, int);
 typedef OnGestureCompleteListenerOther = void Function(bool);

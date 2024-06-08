@@ -10,7 +10,7 @@ class AnimCardd extends StatefulWidget {
   const AnimCardd(this.color, this.num, this.numEng, this.content, {super.key});
 
   @override
-  _AnimCardState createState() => _AnimCardState();
+  State<AnimCardd> createState() => _AnimCardState();
 }
 
 class _AnimCardState extends State<AnimCardd> {
@@ -58,7 +58,7 @@ class _AnimCardState extends State<AnimCardd> {
             ),
             child: Center(
                 child: Icon(Icons.favorite,
-                    color: Color.fromARGB(255, 27, 25, 139).withOpacity(1.0), size: 70)),
+                    color: const Color.fromARGB(255, 27, 25, 139).withOpacity(1.0), size: 70)),
           ),
         ),
       ],
@@ -71,7 +71,7 @@ class CardItem extends StatelessWidget {
   final String num;
   final String numEng;
   final String content;
-  final onTap;
+  final Function() onTap;
 
   const CardItem(this.color, this.num, this.numEng, this.content, this.onTap, {super.key});
 

@@ -1,5 +1,5 @@
-import 'package:Buga/matchscreen.dart';
-import 'package:Buga/styles/style.dart';
+import 'package:buga/matchscreen.dart';
+import 'package:buga/styles/style.dart';
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {

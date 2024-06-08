@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:Buga/widgets/gamewidgets/point.dart';
+import 'package:buga/widgets/gamewidgets/point.dart';
 
 class GestureDotsPanel1 extends StatelessWidget {
   final double width, height;

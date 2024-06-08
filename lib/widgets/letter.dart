@@ -1,5 +1,5 @@
-import 'package:Buga/models/answer.dart';
-import 'package:Buga/styles/style.dart';
+import 'package:buga/models/answer.dart';
+import 'package:buga/styles/style.dart';
 import 'package:flutter/material.dart';
 
 
@@ -16,7 +16,7 @@ class AnimCard extends StatefulWidget {
       {super.key});
 
   @override
-  _AnimCardState createState() => _AnimCardState();
+  State<AnimCard> createState() => _AnimCardState();
 }
 
 class _AnimCardState extends State<AnimCard> {
@@ -122,7 +122,7 @@ class _AnimCardState extends State<AnimCard> {
 
 class CardItem extends StatelessWidget {
   final List<Answers> answers;
-  final onTap;
+  final Function() onTap;
    
   const CardItem(this.answers,this.onTap,  {super.key});
 

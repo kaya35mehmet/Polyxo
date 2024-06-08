@@ -1,14 +1,15 @@
-import 'package:Buga/functions/login.dart';
-import 'package:Buga/functions/users.dart';
-import 'package:Buga/leaderboard.dart';
-import 'package:Buga/profilepage.dart';
-import 'package:Buga/shopscreen.dart';
-import 'package:Buga/styles/style.dart';
-import 'package:Buga/widgets/button.dart';
-import 'package:Buga/widgets/fortunewheel.dart';
-import 'package:Buga/widgets/gift.dart';
-import 'package:Buga/widgets/logo.dart';
-import 'package:Buga/widgets/raipple.dart';
+import 'package:buga/functions/login.dart';
+import 'package:buga/functions/users.dart';
+import 'package:buga/leaderboard.dart';
+import 'package:buga/loginpage.dart';
+import 'package:buga/profilepage.dart';
+import 'package:buga/shopscreen.dart';
+import 'package:buga/styles/style.dart';
+import 'package:buga/widgets/button.dart';
+import 'package:buga/widgets/fortunewheel.dart';
+import 'package:buga/widgets/gift.dart';
+import 'package:buga/widgets/logo.dart';
+import 'package:buga/widgets/raipple.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -92,9 +93,21 @@ class HomeScreenState extends State<HomeScreen>
   getguid() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? action = prefs.getString('guid');
-    setState(() {
-      guid = action;
-    });
+
+    if (action == null) {
+      // ignore: use_build_context_synchronously
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginPage(),
+        ),
+        (Route<dynamic> route) => false,
+      );
+    } else {
+      setState(() {
+        guid = action;
+      });
+    }
   }
 
   @override
@@ -108,7 +121,9 @@ class HomeScreenState extends State<HomeScreen>
       context: context,
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return  FortuneWheel(date: fortunewheel!,);
+        return FortuneWheel(
+          date: fortunewheel!,
+        );
       },
     ).then((value) async {
       int val = value as int;
@@ -117,30 +132,35 @@ class HomeScreenState extends State<HomeScreen>
         await Future<dynamic>.delayed(const Duration(milliseconds: 5), () {
           setState(() {
             point = (point2++).toString();
+            fortunewheel = DateTime.now();
           });
         });
       }
-      print(point);
+      if (kDebugMode) {
+        print(point);
+      }
       updatefortunewheel(guid, point).then((value) => getpoint());
       // getpoint();
     });
   }
-
 
   Future<void> showGift() async {
     showGeneralDialog(
       context: context,
       pageBuilder: (BuildContext context, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        return   GiftScreen(date: gift!,);
+        return GiftScreen(
+          date: gift!,
+        );
       },
     ).then((value) async {
-     int val = value as int;
+      int val = value as int;
       int point2 = int.parse(point!);
       for (var i = 0; i <= val; i++) {
         await Future<dynamic>.delayed(const Duration(milliseconds: 5), () {
           setState(() {
             point = (point2++).toString();
+            gift = DateTime.now();
           });
         });
       }
@@ -353,6 +373,7 @@ class HomeScreenState extends State<HomeScreen>
                         MaterialPageRoute(
                           builder: (context) => ProfilePage(
                             audioPlayer: _audioPlayer,
+                            guid: guid!,
                           ),
                         ),
                       );
@@ -391,7 +412,7 @@ class HomeScreenState extends State<HomeScreen>
                           minimumSize: const Size(50, 50),
                         ),
                         onPressed: () async {
-                         showGift();
+                          showGift();
                         },
                         child: Image.asset(
                           "assets/images/icons/gift.png",
@@ -453,7 +474,7 @@ class HomeScreenState extends State<HomeScreen>
                     ),
                     IconButton(
                       onPressed: () {
-                        showFortuneWheel().then((value){
+                        showFortuneWheel().then((value) {
                           // updatefortunewheel(guid, point).then((value) => getpoint());
                         });
                       },

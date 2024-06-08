@@ -1,6 +1,6 @@
-import 'package:Buga/functions/users.dart';
-import 'package:Buga/models/user.dart';
-import 'package:Buga/styles/style.dart';
+import 'package:buga/functions/users.dart';
+import 'package:buga/models/user.dart';
+import 'package:buga/styles/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
@@ -27,7 +27,7 @@ class _LeaderBoardState extends State<LeaderBoard> {
           child: Opacity(
             opacity: 0.8,
             child: Image.asset(
-              "assets/images/views/9.jpg",
+              "assets/images/views/13.jpg",
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               fit: BoxFit.cover,

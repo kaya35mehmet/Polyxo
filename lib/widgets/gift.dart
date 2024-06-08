@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:Buga/styles/style.dart';
+import 'package:buga/styles/style.dart';
 import 'package:flutter/material.dart';
 
 class GiftScreen extends StatefulWidget {

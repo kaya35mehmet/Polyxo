@@ -19,32 +19,21 @@ class Answer {
 }
 
 class Answers {
-  String? _question;
-  bool? _answer;
+  String? question;
+  bool? answer;
+  Answers({this.question, this.answer});
 
-  Answers({String? question, bool? answer}) {
-    if (question != null) {
-      _question = question;
-    }
-    if (answer != null) {
-      _answer = answer;
-    }
-  }
-
-  String? get question => _question;
-  set question(String? question) => _question = question;
-  bool? get answer => _answer;
-  set answer(bool? answer) => _answer = answer;
+ 
 
   Answers.fromJson(Map<String, dynamic> json) {
-    _question = json['question'];
-    _answer = json['answer'];
+    question = json['question'];
+    answer = json['answer'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['question'] = _question;
-    data['answer'] = _answer;
+    data['question'] = question;
+    data['answer'] = answer;
     return data;
   }
 

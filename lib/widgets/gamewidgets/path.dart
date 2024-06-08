@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:Buga/widgets/gamewidgets/gesture.dart';
-import 'package:Buga/widgets/gamewidgets/point.dart';
+import 'package:buga/widgets/gamewidgets/gesture.dart';
+import 'package:buga/widgets/gamewidgets/point.dart';
 
 class GesturePathView extends StatefulWidget {
   final double width;

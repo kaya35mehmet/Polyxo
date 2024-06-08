@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:developer' as developer;
-import 'package:Buga/homescreen.dart';
-import 'package:Buga/loginpage.dart';
-import 'package:Buga/models/firebase_auth.dart';
-import 'package:Buga/widgets/logo.dart';
+import 'package:buga/homescreen.dart';
+import 'package:buga/loginpage.dart';
+import 'package:buga/models/firebase_auth.dart';
+import 'package:buga/widgets/logo.dart';
 import 'package:another_flutter_splash_screen/another_flutter_splash_screen.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -81,6 +81,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'BUGA',
       home: FlutterSplashScreen.fadeIn(
+        animationDuration: const Duration(milliseconds: 1000),
+        animationCurve : Curves.easeInCubic,
         backgroundColor: Colors.white,
         onInit: () {
           debugPrint("On Init");

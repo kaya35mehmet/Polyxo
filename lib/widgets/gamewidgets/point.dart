@@ -1,3 +1,5 @@
+// ignore_for_file: hash_and_equals
+
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -51,7 +53,7 @@ class GesturePoint {
   }
 
   @override
-  bool operator ==(Object other) {
+  bool operator == (Object other) {
     if (other is GesturePoint) {
       return index == other.index &&
           centerX == other.centerX &&
