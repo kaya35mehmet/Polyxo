@@ -16,16 +16,16 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF5286e1),
+      backgroundColor: Color(0xFF1b263d),
       extendBodyBehindAppBar: true,
       extendBody: true,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.black87,
-              Color(0xFF5286e1),
-              Color(0xFF5286e1)
+              Color(0xFF31384c),
+                 Color(0xFF1b263d),
+                 Color(0xFF19243a),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -36,6 +36,9 @@ class LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 100,
             ),
+            // AspectRatio(aspectRatio: 2,
+            // child: Image.asset("assets/images/logo.png"),
+            // ),
             const Logo(),
             const SizedBox(
               height: 100,

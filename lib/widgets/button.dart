@@ -25,7 +25,7 @@ class Button extends StatelessWidget {
           side: BorderSide(color: Colors.white.withOpacity(0.5), width: 1.0),
           shadowColor: Colors.black,
           backgroundColor:
-              const Color.fromARGB(255, 25, 28, 25).withOpacity(0.4),
+              mainColor,
           elevation: 6.0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(50),

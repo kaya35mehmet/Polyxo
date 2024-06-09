@@ -139,7 +139,9 @@ class HomeScreenState extends State<HomeScreen>
       if (kDebugMode) {
         print(point);
       }
-      updatefortunewheel(guid, point).then((value) => getpoint());
+      updatefortunewheel(guid, point).then(
+        (value) => getpoint(),
+      );
       // getpoint();
     });
   }
@@ -166,6 +168,58 @@ class HomeScreenState extends State<HomeScreen>
       }
       updategift(guid, point).then((value) => getpoint());
     });
+  }
+
+  void chooserisk(BuildContext context) {
+    showDialog(
+        context: context,
+        barrierColor: Colors.black.withOpacity(0.5),
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            backgroundColor: Colors.black.withOpacity(0.7),
+            title: Text(
+              "RİSK",
+              textAlign: TextAlign.center,
+              style: title28w,
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Button(
+                  amount: 100,
+                  guid: guid!,
+                  point: point!,
+                  animation: _animation,
+                  animationController: _animationController,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Button(
+                  amount: 200,
+                  guid: guid!,
+                  point: point!,
+                  animation: _animation,
+                  animationController: _animationController,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Button(
+                  amount: 500,
+                  guid: guid!,
+                  point: point!,
+                  animation: _animation,
+                  animationController: _animationController,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
+          );
+        });
   }
 
   @override
@@ -225,55 +279,7 @@ class HomeScreenState extends State<HomeScreen>
                       ),
                       minimumSize: const Size(250, 60),
                     ),
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text(
-                                "RİSK",
-                                textAlign: TextAlign.center,
-                                style: title24,
-                              ),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Button(
-                                    amount: 100,
-                                    guid: guid!,
-                                    point: point!,
-                                    animation: _animation,
-                                    animationController: _animationController,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Button(
-                                    amount: 200,
-                                    guid: guid!,
-                                    point: point!,
-                                    animation: _animation,
-                                    animationController: _animationController,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Button(
-                                    amount: 500,
-                                    guid: guid!,
-                                    point: point!,
-                                    animation: _animation,
-                                    animationController: _animationController,
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
-                              ),
-                            );
-                          });
-                    },
+                    onPressed: () => chooserisk(context),
                     child: const Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -353,35 +359,70 @@ class HomeScreenState extends State<HomeScreen>
                       ),
                     ),
                   ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.all(0),
-                      side: BorderSide(
-                          color: Colors.white.withOpacity(0.5), width: 1.0),
-                      shadowColor: Colors.black,
-                      backgroundColor: const Color.fromARGB(255, 25, 28, 25)
-                          .withOpacity(0.4),
-                      elevation: 6.0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50),
-                      ),
-                      minimumSize: const Size(50, 50),
-                    ),
-                    onPressed: () async {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ProfilePage(
-                            audioPlayer: _audioPlayer,
-                            guid: guid!,
+                  Row(
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(0),
+                          side: BorderSide(
+                              color: Colors.white.withOpacity(0.5), width: 1.0),
+                          shadowColor: Colors.black,
+                          backgroundColor: const Color.fromARGB(255, 25, 28, 25)
+                              .withOpacity(0.4),
+                          elevation: 6.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
                           ),
+                          minimumSize: const Size(50, 50),
                         ),
-                      );
-                    },
-                    child: const Icon(
-                      Icons.settings,
-                      size: 30,
-                    ),
+                        onPressed: () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProfilePage(
+                                audioPlayer: _audioPlayer,
+                                guid: guid!,
+                              ),
+                            ),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.notifications,
+                          size: 30,
+                        ),
+                      ),
+                      const SizedBox(width: 6,),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          padding: const EdgeInsets.all(0),
+                          side: BorderSide(
+                              color: Colors.white.withOpacity(0.5), width: 1.0),
+                          shadowColor: Colors.black,
+                          backgroundColor: const Color.fromARGB(255, 25, 28, 25)
+                              .withOpacity(0.4),
+                          elevation: 6.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
+                          minimumSize: const Size(50, 50),
+                        ),
+                        onPressed: () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProfilePage(
+                                audioPlayer: _audioPlayer,
+                                guid: guid!,
+                              ),
+                            ),
+                          );
+                        },
+                        child: const Icon(
+                          Icons.settings,
+                          size: 30,
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

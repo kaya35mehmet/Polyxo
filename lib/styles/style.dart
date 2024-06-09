@@ -26,6 +26,12 @@ var title24 = const TextStyle(
     fontSize: 24,
     fontFamily: 'Jost');
 
+var title28w = const TextStyle(
+    color: Color.fromARGB(255, 255, 255, 255),
+    fontWeight: FontWeight.bold,
+    fontSize: 28,
+    fontFamily: 'Jost');
+
 var resultstylewhite = const TextStyle(
     color: Color.fromARGB(255, 248, 248, 248),
     fontWeight: FontWeight.bold,

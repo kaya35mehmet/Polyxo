@@ -52,6 +52,7 @@ class _ResultScreenState extends State<ResultScreen> {
   String username = "";
   int point = 0;
   int rivalpoint = 0;
+  var icon;
 
   @override
   void initState() {
@@ -113,11 +114,16 @@ class _ResultScreenState extends State<ResultScreen> {
 
   calc(tcount, rtime, rtcount, rrtime) {
     var result = "";
+
     if (tcount > rtcount) {
       result = "KAZANDINIZ";
       setState(() {
         point = point + widget.amount;
         rivalpoint = rivalpoint - widget.amount;
+        icon = Image.asset(
+          "assets/images/icons/win.png",
+          width: 150,
+        );
       });
     } else if (tcount == rtcount) {
       if (rtime > rrtime) {
@@ -125,6 +131,7 @@ class _ResultScreenState extends State<ResultScreen> {
         setState(() {
           point = point + widget.amount;
           rivalpoint = rivalpoint - widget.amount;
+          icon = Image.asset("assets/images/icons/win.png");
         });
       } else if (rtime == rrtime) {
         result = "BERABERE KALDINIZ";
@@ -133,6 +140,7 @@ class _ResultScreenState extends State<ResultScreen> {
         setState(() {
           point = point - widget.amount;
           rivalpoint = rivalpoint + widget.amount;
+          icon = Image.asset("assets/images/icons/win.png");
         });
       }
     } else {
@@ -140,6 +148,9 @@ class _ResultScreenState extends State<ResultScreen> {
       setState(() {
         point = point - widget.amount;
         rivalpoint = rivalpoint + widget.amount;
+        icon = Image.asset(
+          "assets/images/icons/win.png",
+        );
       });
     }
     showDialog(
@@ -147,14 +158,45 @@ class _ResultScreenState extends State<ResultScreen> {
         barrierDismissible: false,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(result),
-            content: Text(result),
+            backgroundColor: Colors.black.withOpacity(0.7),
+            title: Center(child: icon),
+            content: Text(
+              result,
+              style: title28w,
+              textAlign: TextAlign.center,
+            ),
             actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text('Kapat'),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shadowColor: Colors.black,
+                  backgroundColor: const Color(0xFF1fb109),
+                  elevation: 6.0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50),
+                  ),
+                  minimumSize: const Size(250, 60),
+                ),
+                onPressed: () => Navigator.pop(context),
+                child: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "KAPAT",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Jost",
+                        shadows: <Shadow>[
+                          Shadow(
+                            offset: Offset(0.5, 0.5),
+                            blurRadius: 2.0,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           );
@@ -358,63 +400,77 @@ class _ResultScreenState extends State<ResultScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey[800]!,
-                                    blurRadius: 10.0,
-                                  ),
-                                ]),
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.pushAndRemoveUntil<void>(
-                                  context,
-                                  MaterialPageRoute<void>(
-                                      builder: (BuildContext context) =>
-                                          MatchScreen(
-                                            guid: guid!,
-                                            point: widget.point,
-                                            animation: widget.animation,
-                                            animationController:
-                                                widget.animationController,
-                                            amount: widget.amount,
-                                          )),
-                                  ModalRoute.withName('/'),
-                                );
-                              },
-                              iconSize: 60,
-                              icon:
-                                  Image.asset("assets/images/icons/reload.png"),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.all(0),
+                              side: BorderSide(
+                                  color: Colors.white.withOpacity(0.5),
+                                  width: 1.0),
+                              shadowColor: Colors.black,
+                              backgroundColor:
+                                  const Color.fromARGB(255, 25, 28, 25)
+                                      .withOpacity(0.4),
+                              elevation: 6.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              minimumSize: const Size(70, 70),
+                            ),
+                            onPressed: () async {
+                              Navigator.pushAndRemoveUntil<void>(
+                                context,
+                                MaterialPageRoute<void>(
+                                    builder: (BuildContext context) =>
+                                        MatchScreen(
+                                          guid: guid!,
+                                          point: widget.point,
+                                          animation: widget.animation,
+                                          animationController:
+                                              widget.animationController,
+                                          amount: widget.amount,
+                                        )),
+                                ModalRoute.withName('/'),
+                              );
+                            },
+                            child: const Icon(
+                              Icons.refresh,
+                              size: 50,
                             ),
                           ),
                           const SizedBox(
                             width: 30,
                           ),
-                          Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey[800]!,
-                                    blurRadius: 5.0,
-                                  ),
-                                ]),
-                            child: IconButton(
-                              onPressed: () {
-                                Navigator.pushAndRemoveUntil<void>(
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              padding: const EdgeInsets.all(0),
+                              side: BorderSide(
+                                  color: Colors.white.withOpacity(0.5),
+                                  width: 1.0),
+                              shadowColor: Colors.black,
+                              backgroundColor:
+                                  const Color.fromARGB(255, 25, 28, 25)
+                                      .withOpacity(0.4),
+                              elevation: 6.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
+                              minimumSize: const Size(70, 70),
+                            ),
+                            onPressed: () async {
+                              Navigator.pushAndRemoveUntil<void>(
                                   context,
                                   MaterialPageRoute<void>(
                                       builder: (BuildContext context) =>
                                           const HomeScreen()),
                                   ModalRoute.withName('/'),
                                 );
-                              },
-                              iconSize: 60,
-                              icon: Image.asset("assets/images/icons/home.png"),
+                            },
+                            child: const Icon(
+                              Icons.home,
+                              size: 50,
                             ),
                           ),
+                          
                         ],
                       ),
                     ),

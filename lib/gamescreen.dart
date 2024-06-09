@@ -142,6 +142,7 @@ class _GameScreenState extends State<GameScreen>
             barrierDismissible: false,
             builder: (BuildContext context) {
               return AlertDialog(
+                backgroundColor: Colors.black.withOpacity(0.7),
                 title: const Text('KAZANDINIZ'),
                 content: const Text('Rakibiniz oyunu terk etti.'),
                 actions: <Widget>[
@@ -201,9 +202,9 @@ class _GameScreenState extends State<GameScreen>
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) {
-              return const AlertDialog(
-                title: Text(''),
-                content: Text('Rakibinizin oyunu bitirmesi bekleniyor.'),
+              return  AlertDialog(
+                backgroundColor: Colors.black.withOpacity(0.7),
+                content: Text('Rakibinizin oyunu bitirmesi bekleniyor.', style: title28w, textAlign: TextAlign.center,),
               );
             });
       }

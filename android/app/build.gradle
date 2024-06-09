@@ -31,7 +31,8 @@ def keystoreProperties = new Properties()
 
 android {
     namespace "com.buggagames.Buga"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34
+    // compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
