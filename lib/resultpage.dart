@@ -43,8 +43,6 @@ class ResultScreen extends StatefulWidget {
 
 class _ResultScreenState extends State<ResultScreen> {
   late StreamController<Results> _streamController;
-  // final WebSocketChannel channel =
-  //     IOWebSocketChannel.connect('ws://213.142.151.21:3000/message');
 
   int trueCount = 0;
   int falseCount = 0;
@@ -140,7 +138,7 @@ class _ResultScreenState extends State<ResultScreen> {
         setState(() {
           point = point - widget.amount;
           rivalpoint = rivalpoint + widget.amount;
-          icon = Image.asset("assets/images/icons/win.png");
+          icon = Image.asset("assets/images/icons/lost.png");
         });
       }
     } else {
@@ -149,7 +147,7 @@ class _ResultScreenState extends State<ResultScreen> {
         point = point - widget.amount;
         rivalpoint = rivalpoint + widget.amount;
         icon = Image.asset(
-          "assets/images/icons/win.png",
+          "assets/images/icons/lost.png",
         );
       });
     }

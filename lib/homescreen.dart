@@ -2,9 +2,11 @@ import 'package:buga/functions/login.dart';
 import 'package:buga/functions/users.dart';
 import 'package:buga/leaderboard.dart';
 import 'package:buga/loginpage.dart';
+import 'package:buga/notificationpage.dart';
 import 'package:buga/profilepage.dart';
 import 'package:buga/shopscreen.dart';
 import 'package:buga/styles/style.dart';
+import 'package:buga/walletpage.dart';
 import 'package:buga/widgets/button.dart';
 import 'package:buga/widgets/fortunewheel.dart';
 import 'package:buga/widgets/gift.dart';
@@ -178,10 +180,28 @@ class HomeScreenState extends State<HomeScreen>
         builder: (BuildContext context) {
           return AlertDialog(
             backgroundColor: Colors.black.withOpacity(0.7),
-            title: Text(
-              "RİSK",
-              textAlign: TextAlign.center,
-              style: title28w,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "",
+                  textAlign: TextAlign.center,
+                  style: title28w,
+                ),
+                Text(
+                  "   RİSK",
+                  textAlign: TextAlign.center,
+                  style: title28w,
+                ),
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: const Icon(
+                      Icons.close,
+                      color: Colors.white,
+                    ))
+              ],
             ),
             content: Column(
               mainAxisSize: MainAxisSize.min,
@@ -379,10 +399,7 @@ class HomeScreenState extends State<HomeScreen>
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => ProfilePage(
-                                audioPlayer: _audioPlayer,
-                                guid: guid!,
-                              ),
+                              builder: (context) => const NotificationPage(),
                             ),
                           );
                         },
@@ -391,7 +408,9 @@ class HomeScreenState extends State<HomeScreen>
                           size: 30,
                         ),
                       ),
-                      const SizedBox(width: 6,),
+                      const SizedBox(
+                        width: 6,
+                      ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(0),
@@ -483,6 +502,33 @@ class HomeScreenState extends State<HomeScreen>
                       },
                       child: const Icon(
                         Icons.shopping_cart,
+                        size: 30,
+                      ),
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.all(0),
+                        side: BorderSide(
+                            color: Colors.white.withOpacity(0.5), width: 1.0),
+                        shadowColor: Colors.black,
+                        backgroundColor: const Color.fromARGB(255, 25, 28, 25)
+                            .withOpacity(0.4),
+                        elevation: 6.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        minimumSize: const Size(50, 50),
+                      ),
+                      onPressed: () async {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const WalletPage(),
+                          ),
+                        );
+                      },
+                      child: const Icon(
+                        Icons.wallet,
                         size: 30,
                       ),
                     ),

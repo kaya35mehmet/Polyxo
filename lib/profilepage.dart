@@ -351,13 +351,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),
               ),
-            ],
-          ),
-          Positioned(
-            bottom: 80,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Padding(
+              const SizedBox(
+                height: 70,
+              ),
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20.0),
                 child: Column(
                   children: [
@@ -415,7 +412,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
               ),
-            ),
+            ],
           ),
         ],
       ),

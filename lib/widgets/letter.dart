@@ -1,3 +1,4 @@
+import 'package:buga/functions/stringmethosd.dart';
 import 'package:buga/models/answer.dart';
 import 'package:buga/styles/style.dart';
 import 'package:flutter/material.dart';
@@ -168,7 +169,7 @@ class CardItem extends StatelessWidget {
                           padding: const EdgeInsets.all(8.0),
                           child: Center(
                             child: Text(
-                              answers[index].question!.toUpperCase(),
+                              turkishToUpperCase(answers[index].question!),
                               style: const TextStyle(color: Colors.white),
                             ),
                           ),

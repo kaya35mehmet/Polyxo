@@ -1,5 +1,6 @@
 // ignore_for_file: hash_and_equals
 
+import 'package:buga/functions/stringmethosd.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -27,7 +28,7 @@ class GesturePoint {
     Size size = const Size(400, 400);
     TextPainter textPainter = TextPainter(
       text: TextSpan(
-        text: letter,
+        text: turkishToUpperCase(letter),
         style: TextStyle(
           color: Colors.black,
           fontSize: fontsize,

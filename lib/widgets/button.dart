@@ -49,8 +49,10 @@ class Button extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            Image.asset("assets/images/icons/coins.png", width: 40,),
+            const SizedBox(width: 10,),
             Text(
-              "$amount TOKEN",
+              "$amount COIN",
               style: profilechoises,
             ),
           ],

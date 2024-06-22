@@ -1,15 +1,17 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:buga/functions/stringmethosd.dart';
 import 'package:buga/homescreen.dart';
 import 'package:buga/models/user.dart';
 import 'package:buga/resultpage.dart';
 import 'package:buga/styles/style.dart';
+import 'package:buga/widgets/pointstar.dart';
 import 'package:flutter/material.dart';
 import 'package:buga/widgets/gamewidgets/gesture.dart';
 import 'package:buga/models/answer.dart';
 import 'package:buga/models/dictionary.dart';
 import 'package:wakelock/wakelock.dart';
-// import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class GameScreen extends StatefulWidget {
@@ -55,6 +57,7 @@ class _GameScreenState extends State<GameScreen>
   late Future<bool> ftstart;
   bool start = false;
   double _progress = 1.0;
+  int questionpoint = 0;
 
   void _startTimer() {
     _timer = Timer.periodic(const Duration(seconds: 1), (Timer timer) {
@@ -202,18 +205,23 @@ class _GameScreenState extends State<GameScreen>
             context: context,
             barrierDismissible: false,
             builder: (BuildContext context) {
-              return  AlertDialog(
+              return AlertDialog(
                 backgroundColor: Colors.black.withOpacity(0.7),
-                content: Text('Rakibinizin oyunu bitirmesi bekleniyor.', style: title28w, textAlign: TextAlign.center,),
+                content: Text(
+                  'Rakibinizin oyunu bitirmesi bekleniyor.',
+                  style: title28w,
+                  textAlign: TextAlign.center,
+                ),
               );
             });
       }
     } else {
       pathArr.clear();
       setState(() {
-        letters = list[lindex].word.toUpperCase().split("").toList();
-        shuffleletters = list[lindex].word.toUpperCase().split("").toList();
+        letters = list[lindex].word.split("").toList();
+        shuffleletters = list[lindex].word.split("").toList();
         question = list[lindex].meaning;
+        questionpoint = list[lindex].puan;
         shuffleletters.shuffle();
 
         for (var element in letters) {
@@ -344,81 +352,112 @@ class _GameScreenState extends State<GameScreen>
                     Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        Column(
+                        Stack(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Stack(
-                                children: [
-                                  Center(
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      width: screenWidth * 0.92,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(10),
-                                        ),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color:
-                                                Colors.black.withOpacity(0.5),
-                                            spreadRadius: 5,
-                                            blurRadius: 7,
-                                            offset: const Offset(0, 3),
-                                          ),
-                                        ],
-                                      ),
-                                      child: Stack(
-                                        children: [
-                                          Container(
-                                            alignment: Alignment.topCenter,
-                                            margin:
-                                                const EdgeInsets.only(top: 0),
-                                            width: screenWidth * 0.5,
-                                            height: 24,
-                                            decoration:  BoxDecoration(
-                                              color: mainColor,
-                                              borderRadius: const BorderRadius.only(
-                                                bottomRight:
-                                                    Radius.circular(10),
+                            Column(
+                              children: [
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(10.0),
+                                  child: Stack(
+                                    children: [
+                                      Center(
+                                        child: Container(
+                                          alignment: Alignment.center,
+                                          width: screenWidth * 0.92,
+                                          height: 190,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                              Radius.circular(10),
+                                            ),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                color: Colors.black
+                                                    .withOpacity(0.5),
+                                                spreadRadius: 5,
+                                                blurRadius: 7,
+                                                offset: const Offset(0, 3),
                                               ),
-                                            ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  "SORULAR   ",
-                                                  style: answer14,
-                                                ),
-                                                Text(
-                                                  "${lindex + 1}/10",
-                                                  style: answer14,
-                                                ),
-                                              ],
-                                            ),
+                                            ],
                                           ),
-                                          Center(
-                                            child: Text(
-                                              question.toUpperCase(),
-                                              style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 26,
-                                                  fontFamily: 'Jost'),
-                                            ),
+                                          child: Stack(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Container(
+                                                    alignment:
+                                                        Alignment.topCenter,
+                                                    margin:
+                                                        const EdgeInsets.only(
+                                                            top: 0),
+                                                    width: screenWidth * 0.5,
+                                                    height: 24,
+                                                    decoration: BoxDecoration(
+                                                      color: mainColor,
+                                                      borderRadius:
+                                                          const BorderRadius
+                                                              .only(
+                                                        bottomRight:
+                                                            Radius.circular(10),
+                                                      ),
+                                                    ),
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: [
+                                                        Text(
+                                                          "SORULAR   ",
+                                                          style: answer14,
+                                                        ),
+                                                        Text(
+                                                          "${lindex + 1}/10",
+                                                          style: answer14,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Center(
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(10),
+                                                  child: AutoSizeText(
+                                                    question,
+                                                    maxLines: 4,
+                                                    textAlign: TextAlign.center,
+                                                    style: const TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 20,
+                                                        fontFamily: 'Jost'),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            const SizedBox(
-                              height: 0,
+                            Positioned(
+                              right: 30,
+                              top: 0,
+                              child: StarPoint(questionpoint: questionpoint),
                             ),
                           ],
                         ),
@@ -448,8 +487,12 @@ class _GameScreenState extends State<GameScreen>
                                                 opacity: _animationController,
                                                 child: Center(
                                                   child: pathArr[index] == ""
-                                                      ? Text(
-                                                          pathArr[index],
+                                                      ? AutoSizeText(
+                                                          turkishToUpperCase(
+                                                              pathArr[index]),
+                                                          maxLines: 4,
+                                                          textAlign:
+                                                              TextAlign.center,
                                                           style:
                                                               const TextStyle(
                                                                   fontSize: 30,
@@ -457,15 +500,19 @@ class _GameScreenState extends State<GameScreen>
                                                                       FontWeight
                                                                           .bold,
                                                                   fontFamily:
-                                                                      "",
+                                                                      "Jost",
                                                                   color: Colors
                                                                       .white),
                                                         )
                                                       : FadeTransition(
                                                           opacity:
                                                               _animationController,
-                                                          child: Text(
-                                                            pathArr[index],
+                                                          child: AutoSizeText(
+                                                            turkishToUpperCase(
+                                                                pathArr[index]),
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            maxLines: 4,
                                                             style:
                                                                 const TextStyle(
                                                               fontSize: 30,
@@ -922,7 +969,7 @@ class _GameScreenState extends State<GameScreen>
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
                                   Image.asset(
-                                    "assets/images/icons/gold.png",
+                                    "assets/images/icons/coin.png",
                                     width: 30,
                                   ),
                                   Text(
